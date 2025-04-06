@@ -1,0 +1,6 @@
+@ShopMax.API_HostAddress = http://localhost:5193
+
+GET {{ShopMax.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

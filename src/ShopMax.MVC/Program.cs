@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-
 if (builder.Environment.IsDevelopment())
 {
 	builder.Services.AddDbContext<ShopMaxDbContext>(options =>
@@ -19,8 +18,9 @@ else
 		options.UseSqlServer(connectionString));
 }
 
-builder.Services.AddDefaultIdentity<Vendedor>(options => options.SignIn.RequireConfirmedAccount = true)
-.AddEntityFrameworkStores<ShopMaxDbContext>();
+builder.Services
+	.AddDefaultIdentity<Vendedor>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddEntityFrameworkStores<ShopMaxDbContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -52,6 +52,6 @@ app.MapControllerRoute(
 	.WithStaticAssets();
 
 app.MapRazorPages()
-   .WithStaticAssets();
+	.WithStaticAssets();
 
 app.Run();

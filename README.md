@@ -24,7 +24,7 @@ O projeto consiste em:
   - ASP.NET Core MVC
   - ASP.NET Core Web API
   - Entity Framework Core
-- **Banco de Dados:** SQL Server
+- **Banco de Dados:** SQL Server e SQLite
 - **Autenticação e Autorização:**
   - ASP.NET Core Identity
   - JWT (JSON Web Token) para autenticação na API
@@ -37,14 +37,16 @@ O projeto consiste em:
 
 A estrutura do projeto é organizada da seguinte forma:
 
-
-- src/
-  - Blog.Web/ - Projeto MVC
-  - Blog.Api/ - API RESTful
-  - Blog.Data/ - Modelos de Dados e Configuração do EF Core
-- README.md - Arquivo de Documentação do Projeto
-- FEEDBACK.md - Arquivo para Consolidação dos Feedbacks
-- .gitignore - Arquivo de Ignoração do Git
+mba-shopmax/
+├─ src/
+│  ├─ ShopMax.API/ - API RESTful
+│  ├─ ShopMax.Business/ - Modelos, interfaces, regras de negócios
+│  ├─ ShopMax.Data/ - Modelos de Dados e Configuração do EF Core
+│  └─ ShopMax.MVC/ - Projeto MVC
+├─ .gitignore - Arquivo de Ignoração do Git
+├─ FEEDBACK.md - Arquivo para Consolidação dos Feedbacks
+├─ README.md - Arquivo de Documentação do Projeto
+└─ ShopMax.sln - Arquivo da Solução do Projeto
 
 ## **5. Funcionalidades Implementadas**
 
@@ -58,7 +60,7 @@ A estrutura do projeto é organizada da seguinte forma:
 ### **Pré-requisitos**
 
 - .NET SDK 9.0 ou superior
-- SQL Server
+- SQL Server e SQLite
 - Visual Studio 2022 ou superior (ou qualquer IDE de sua preferência)
 - Git
 
@@ -75,12 +77,12 @@ A estrutura do projeto é organizada da seguinte forma:
 3. **Executar a Aplicação MVC:**
    - `cd src/ShopMax.MVC/`
    - `dotnet run`
-   - Acesse a aplicação em: http://localhost:5000
+   - Acesse a aplicação em: https://localhost:7017
 
 4. **Executar a API:**
    - `cd src/ShopMax.API/`
    - `dotnet run`
-   - Acesse a documentação da API em: http://localhost:5001/swagger
+   - Acesse a documentação da API em: https://localhost:7035/swagger
 
 ## **7. Instruções de Configuração**
 
@@ -91,7 +93,7 @@ A estrutura do projeto é organizada da seguinte forma:
 
 A documentação da API está disponível através do Swagger. Após iniciar a API, acesse a documentação em:
 
-http://localhost:5001/swagger
+https://localhost:7035/swagger
 
 ## **9. Avaliação**
 

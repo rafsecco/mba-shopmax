@@ -41,7 +41,7 @@ public class CategoriasController : Controller
 		return View(categoria);
 	}
 
-	[Route("novo")]
+	[Route("nova")]
 	public IActionResult Create()
 	{
 		return View();
