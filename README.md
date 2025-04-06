@@ -1,4 +1,4 @@
-# **ShopMax - Sistema de gestão simplificada de produtos e categorias em um formato tipo e-commerce marketplace**
+# **ShopMax - Sistema simplificado de e-commerce marketplace**
 
 ## **1. Apresentação**
 
@@ -37,6 +37,7 @@ O projeto consiste em:
 
 A estrutura do projeto é organizada da seguinte forma:
 
+```text
 mba-shopmax/
 ├─ src/
 │  ├─ ShopMax.API/ - API RESTful
@@ -47,6 +48,8 @@ mba-shopmax/
 ├─ FEEDBACK.md - Arquivo para Consolidação dos Feedbacks
 ├─ README.md - Arquivo de Documentação do Projeto
 └─ ShopMax.sln - Arquivo da Solução do Projeto
+```
+
 
 ## **5. Funcionalidades Implementadas**
 
