@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using ShopMax.Business.Models;
 using ShopMax.Data;
 
@@ -39,7 +38,7 @@ public static class DbMigrationHelpers
 	{
 		if (!context.Categorias.Any())
 		{
-			Categoria[] categorias =
+			Category[] categorias =
 			{
 				new() { Nome = "Bebidas", Descricao = "Bebidas" },
 				new() { Nome = "Alimentos", Descricao = "Alimentos" },
@@ -57,14 +56,14 @@ public static class DbMigrationHelpers
 
 			await context.Users.AddAsync(new()
 			{
-				Id = "1",
+				Id = 1,
 				UserName = string.Format(email, 1),
 				NormalizedUserName = string.Format(email, 1).ToUpper(),
 				Email = string.Format(email, 1),
 				NormalizedEmail = string.Format(email, 1).ToUpper(),
 				AccessFailedCount = 0,
 				LockoutEnabled = false,
-				PasswordHash = new PasswordHasher<Vendedor>().HashPassword(null, "Teste@123"),
+				PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Teste@123"),
 				TwoFactorEnabled = false,
 				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				EmailConfirmed = true,
@@ -73,14 +72,14 @@ public static class DbMigrationHelpers
 
 			await context.Users.AddAsync(new()
 			{
-				Id = "2",
+				Id = 2,
 				UserName = string.Format(email, 2),
 				NormalizedUserName = string.Format(email, 2).ToUpper(),
 				Email = string.Format(email, 2),
 				NormalizedEmail = string.Format(email, 2).ToUpper(),
 				AccessFailedCount = 0,
 				LockoutEnabled = false,
-				PasswordHash = new PasswordHasher<Vendedor>().HashPassword(null, "Teste@123"),
+				PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Teste@123"),
 				TwoFactorEnabled = false,
 				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				EmailConfirmed = true,
@@ -92,16 +91,16 @@ public static class DbMigrationHelpers
 
 		if (!context.Produtos.Any())
 		{
-			Produto[] produtos =
+			Product[] produtos =
 			{
-				new() { Nome = "Cerveja", Descricao = "Cerveja", CategoriaId = 1, Preco = 5.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "1" },
-				new() { Nome = "Refrigerante", Descricao = "Refrigerante", CategoriaId = 1, Preco = 3.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "2" },
-				new() { Nome = "Arroz", Descricao = "Arroz", CategoriaId = 2, Preco = 2.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "1" },
-				new() { Nome = "Feijão", Descricao = "Feijão", CategoriaId = 2, Preco = 4.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "2" },
-				new() { Nome = "Detergente", Descricao = "Detergente", CategoriaId = 3, Preco = 1.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "1" },
-				new() { Nome = "Sabão em pó", Descricao = "Sabão em pó", CategoriaId = 3, Preco = 6.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "2" },
-				new() { Nome = "Sabonete", Descricao = "Sabonete", CategoriaId = 4, Preco = 2.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "1" },
-				new() { Nome = "Shampoo", Descricao = "Shampoo", CategoriaId = 4, Preco = 10.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = "2" }
+				new Product() { Nome = "Cerveja", Descricao = "Cerveja", CategoriaId = 1, Preco = 5.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
+				new() { Nome = "Refrigerante", Descricao = "Refrigerante", CategoriaId = 1, Preco = 3.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
+				new() { Nome = "Arroz", Descricao = "Arroz", CategoriaId = 2, Preco = 2.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
+				new() { Nome = "Feijão", Descricao = "Feijão", CategoriaId = 2, Preco = 4.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
+				new() { Nome = "Detergente", Descricao = "Detergente", CategoriaId = 3, Preco = 1.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
+				new() { Nome = "Sabão em pó", Descricao = "Sabão em pó", CategoriaId = 3, Preco = 6.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
+				new() { Nome = "Sabonete", Descricao = "Sabonete", CategoriaId = 4, Preco = 2.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
+				new() { Nome = "Shampoo", Descricao = "Shampoo", CategoriaId = 4, Preco = 10.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 }
 			};
 			await context.Produtos.AddRangeAsync(produtos);
 			await context.SaveChangesAsync();

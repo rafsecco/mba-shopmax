@@ -7,55 +7,56 @@ namespace ShopMax.Data.Repository;
 
 public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
 {
-	protected readonly ShopMaxDbContext Db;
-	protected readonly DbSet<TEntity> DbSet;
+	protected readonly ShopMaxDbContext _context;
+	protected readonly DbSet<TEntity> _dbSet;
 
-	protected Repository(ShopMaxDbContext db)
+	protected Repository(ShopMaxDbContext context)
 	{
-		Db = db;
-		DbSet = db.Set<TEntity>();
+		_context = context;
+		_dbSet = _context.Set<TEntity>();
 	}
 
-	public virtual async Task<TEntity> ObterPorId(int id)
+	public async Task<IEnumerable<TEntity>> ObterTodos()
 	{
-		return await DbSet.FindAsync(id);
+		return await _dbSet.ToListAsync();
 	}
 
-	public virtual async Task<List<TEntity>> ObterTodos()
+	public async Task<TEntity> ObterPorId(int id)
 	{
-		return await DbSet.ToListAsync();
+		return await _dbSet.FindAsync(id);
 	}
 
 	public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
 	{
-		return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
+		return await _dbSet.Where(predicate).ToListAsync();
 	}
 
-	public virtual async Task Adicionar(TEntity entity)
+	public async Task Adicionar(TEntity entity)
 	{
-		DbSet.Add(entity);
+		_dbSet.Add(entity);
 		await SaveChanges();
 	}
 
-	public virtual async Task Atualizar(TEntity entity)
+	public async Task Atualizar(TEntity entity)
 	{
-		DbSet.Update(entity);
+		_dbSet.Update(entity);
 		await SaveChanges();
 	}
 
-	public virtual async Task Remover(int id)
+	public async Task Deletar(int id)
 	{
-		DbSet.Remove(new TEntity { Id = id });
-		await SaveChanges();
+		var entity = await ObterPorId(id);
+		if (entity != null)
+		{
+			_dbSet.Remove(entity);
+			await SaveChanges();
+		}
 	}
 
 	public async Task<int> SaveChanges()
 	{
-		return await Db.SaveChangesAsync();
+		return await _context.SaveChangesAsync();
 	}
 
-	public void Dispose()
-	{
-		Db.Dispose();
-	}
+	public void Dispose() => _context.Dispose();//throw new NotImplementedException();
 }

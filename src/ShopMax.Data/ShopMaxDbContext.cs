@@ -1,13 +1,16 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Models;
 
 namespace ShopMax.Data;
 
-public class ShopMaxDbContext : IdentityDbContext<Vendedor>
+public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int>
 {
-	public DbSet<Produto> Produtos { get; set; }
-	public DbSet<Categoria> Categorias{ get; set; }
+
+	public DbSet<Seller> Vendedor { get; set; }
+	public DbSet<Product> Produtos { get; set; }
+	public DbSet<Category> Categorias{ get; set; }
 
 	public ShopMaxDbContext(DbContextOptions<ShopMaxDbContext> options) : base(options)
 	{

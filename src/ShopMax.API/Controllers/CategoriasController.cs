@@ -20,7 +20,7 @@ namespace ShopMax.API.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Categoria>>> GetCategorias()
+		public async Task<ActionResult<IEnumerable<Category>>> GetCategorias()
 		{
 			return await _context.Categorias.ToListAsync();
 		}
@@ -29,7 +29,7 @@ namespace ShopMax.API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Categoria>> GetCategoria(int id)
+		public async Task<ActionResult<Category>> GetCategoria(int id)
 		{
 			var categoria = await _context.Categorias.FindAsync(id);
 
@@ -46,7 +46,7 @@ namespace ShopMax.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> PutCategoria(int id, Categoria categoria)
+		public async Task<IActionResult> PutCategoria(int id, Category categoria)
 		{
 			if (id != categoria.Id)
 			{
@@ -77,7 +77,7 @@ namespace ShopMax.API.Controllers
 		[HttpPost("nova")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Categoria>> PostCategoria(Categoria categoria)
+		public async Task<ActionResult<Category>> PostCategoria(Category categoria)
 		{
 			_context.Categorias.Add(categoria);
 			await _context.SaveChangesAsync();

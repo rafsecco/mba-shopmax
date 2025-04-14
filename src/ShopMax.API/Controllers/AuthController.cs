@@ -14,13 +14,13 @@ namespace ShopMax.API.Controllers;
 [Route("api/conta")]
 public class AuthController : ControllerBase
 {
-	private readonly SignInManager<Vendedor> _signInManager;
-	private readonly UserManager<Vendedor> _userManager;
+	private readonly SignInManager<Seller> _signInManager;
+	private readonly UserManager<Seller> _userManager;
 	private readonly JwtSettings _jwtSettings;
 
 	public AuthController(
-		SignInManager<Vendedor> signInManager,
-		UserManager<Vendedor> userManager,
+		SignInManager<Seller> signInManager,
+		UserManager<Seller> userManager,
 		IOptions<JwtSettings> jwtSettings)
 	{
 		_signInManager = signInManager;
@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
 	{
 		if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-		var user = new Vendedor
+		var user = new Seller
 		{
 			UserName = registerUser.Email,
 			Email = registerUser.Email,

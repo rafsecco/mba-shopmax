@@ -1,0 +1,87 @@
+@model IEnumerable<ShopMax.MVC.Models.ProductViewModel>
+
+@{
+	ViewData["Title"] = "Lista de Produtos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<vc:Summary></vc:Summary>
+
+<p>
+	<a class="btn btn-info" asp-action="Create">Novo Produto</a>
+</p>
+
+<table class="table table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Nome)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Descricao)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Preco)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.QuantidadeEstoque)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Ativo)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Imagem)
+			</th>
+@* 			<th>
+				@Html.DisplayNameFor(model => model.Categoria)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Vendedor)
+			</th> *@
+			<th>
+				@Html.DisplayNameFor(model => model.DataCadastro)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Nome)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Descricao)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Preco)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.QuantidadeEstoque)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Ativo)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Imagem)
+				</td>
+@* 				<td>
+					@Html.DisplayFor(modelItem => item.Categoria.Descricao)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Vendedor.Id)
+				</td> *@
+				<td>
+					@Html.DisplayFor(modelItem => item.DataCadastro)
+				</td>
+				<td class="text-right">
+					<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+					<a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+					<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

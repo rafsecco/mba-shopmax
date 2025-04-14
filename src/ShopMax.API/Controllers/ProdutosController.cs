@@ -21,7 +21,7 @@ namespace ShopMax.API.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
+		public async Task<ActionResult<IEnumerable<Product>>> GetProdutos()
 		{
 			return await _context.Produtos.ToListAsync();
 		}
@@ -30,7 +30,7 @@ namespace ShopMax.API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Produto>> GetProduto(int id)
+		public async Task<ActionResult<Product>> GetProduto(int id)
 		{
 			var produto = await _context.Produtos.FindAsync(id);
 
@@ -47,7 +47,7 @@ namespace ShopMax.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> PutProduto(int id, Produto produto)
+		public async Task<IActionResult> PutProduto(int id, Product produto)
 		{
 			if (id != produto.Id)
 			{
@@ -78,7 +78,7 @@ namespace ShopMax.API.Controllers
 		[HttpPost("novo")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Produto>> PostProduto(Produto produto)
+		public async Task<ActionResult<Product>> PostProduto(Product produto)
 		{
 			_context.Produtos.Add(produto);
 			await _context.SaveChangesAsync();

@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @using ShopMax.Business.Models
-@inject SignInManager<Vendedor> SignInManager
-@inject UserManager<Vendedor> UserManager
+@inject SignInManager<Seller> SignInManager
+@inject UserManager<Seller> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

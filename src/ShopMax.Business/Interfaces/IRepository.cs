@@ -5,11 +5,11 @@ namespace ShopMax.Business.Interfaces;
 
 public interface IRepository<TEntity> : IDisposable where TEntity : Entity
 {
-	Task Adicionar(TEntity entity);
+	Task<IEnumerable<TEntity>> ObterTodos();
 	Task<TEntity> ObterPorId(int id);
-	Task<List<TEntity>> ObterTodos();
-	Task Atualizar(TEntity entity);
-	Task Remover(int id);
 	Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate);
+	Task Adicionar(TEntity entity);
+	Task Atualizar(TEntity entity);
+	Task Deletar(int id);
 	Task<int> SaveChanges();
 }

@@ -6,7 +6,6 @@ using ShopMax.MVC.Configurations;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
 if (builder.Environment.IsDevelopment())
 {
 	builder.Services.AddDbContext<ShopMaxDbContext>(options =>
@@ -19,8 +18,12 @@ else
 }
 
 builder.Services
-	.AddDefaultIdentity<Vendedor>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddDefaultIdentity<Seller>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<ShopMaxDbContext>();
+
+builder.Services
+	.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
+	.AddService();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -40,6 +43,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();

@@ -54,7 +54,7 @@ else
 		options.UseSqlServer(connectionString));
 }
 
-builder.Services.AddIdentity<Vendedor, IdentityRole>()
+builder.Services.AddIdentity<Seller, IdentityRole>()
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ShopMaxDbContext>();
 

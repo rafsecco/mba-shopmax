@@ -2,15 +2,15 @@ using FluentValidation;
 using FluentValidation.Results;
 using ShopMax.Business.Interfaces;
 using ShopMax.Business.Models;
-using ShopMax.Business.Notificacoes;
+using ShopMax.Business.Notifications;
 
 namespace ShopMax.Business.Services;
 
 public abstract class BaseService
 {
-	private readonly INotificador _notificador;
+	private readonly INotificator _notificador;
 
-	protected BaseService(INotificador notificador)
+	protected BaseService(INotificator notificador)
 	{
 		_notificador = notificador;
 	}
@@ -25,7 +25,7 @@ public abstract class BaseService
 
 	protected void Notificar(string mensagem)
 	{
-		_notificador.Handle(new Notificacao(mensagem));
+		_notificador.Handle(new Notification(mensagem));
 	}
 
 	protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade)
