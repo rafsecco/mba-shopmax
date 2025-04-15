@@ -32,6 +32,9 @@
     - Implementação do ASP.NET Identity
     - Configuração de Seed de dados mencionada
 
+  * Pontos negativos:
+    - MVC não implementa as mesmas funcionalidades da API no registro do usuário.
+
 ### Modelagem
   * Pontos positivos:
     - Modelagem simples e funcional
