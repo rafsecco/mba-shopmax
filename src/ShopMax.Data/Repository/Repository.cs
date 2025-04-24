@@ -16,36 +16,36 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 		_dbSet = _context.Set<TEntity>();
 	}
 
-	public async Task<IEnumerable<TEntity>> ObterTodos()
+	public async Task<IEnumerable<TEntity>> GetAll()
 	{
 		return await _dbSet.ToListAsync();
 	}
 
-	public async Task<TEntity> ObterPorId(int id)
+	public async Task<TEntity> GetById(int id)
 	{
 		return await _dbSet.FindAsync(id);
 	}
 
-	public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
+	public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
 	{
 		return await _dbSet.Where(predicate).ToListAsync();
 	}
 
-	public async Task Adicionar(TEntity entity)
+	public async Task Add(TEntity entity)
 	{
 		_dbSet.Add(entity);
 		await SaveChanges();
 	}
 
-	public async Task Atualizar(TEntity entity)
+	public async Task Update(TEntity entity)
 	{
 		_dbSet.Update(entity);
 		await SaveChanges();
 	}
 
-	public async Task Deletar(int id)
+	public async Task Delete(int id)
 	{
-		var entity = await ObterPorId(id);
+		var entity = await GetById(id);
 		if (entity != null)
 		{
 			_dbSet.Remove(entity);

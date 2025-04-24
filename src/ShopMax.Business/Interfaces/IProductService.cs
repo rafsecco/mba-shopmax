@@ -5,11 +5,11 @@ namespace ShopMax.Business.Interfaces;
 
 public interface IProductService
 {
-	Task<IEnumerable<Product>> ObterTodos();
-	Task<Product> ObterPorId(int id);
-	Task<IEnumerable<Product>> Buscar(Expression<Func<Product, bool>> predicate);
-	Task<IEnumerable<Product>> ObterProdutosDaCategoria(int id);
-	Task Adicionar(Product entity);
-	Task Atualizar(Product entity);
-	Task Deletar(int id);
+	Task<IEnumerable<Product>> GetAll();
+	Task<Product> GetById(int id);
+	Task<IEnumerable<Product>> Find(Expression<Func<Product, bool>> predicate);
+	Task<IEnumerable<Product>> GetProductsFromCategory(int id);
+	Task Add(Product entity);
+	Task Update(Product entity);
+	Task Delete(int id);
 }

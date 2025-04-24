@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopMax.Business.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopMax.MVC.Controllers;
 
@@ -12,8 +13,8 @@ public abstract class BaseController : Controller
 		_notificator = notificator;
 	}
 
-	protected bool OperacaoValida()
+	protected bool ValidateOperation()
 	{
-		return !_notificator.TemNotificacao();
+		return !_notificator.HasNotification();
 	}
 }

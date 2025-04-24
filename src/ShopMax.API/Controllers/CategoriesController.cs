@@ -1,60 +1,59 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Models;
 using ShopMax.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ShopMax.API.Controllers
 {
 	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ProdutosController : ControllerBase
+	public class CategoriesController : ControllerBase
 	{
 		private readonly ShopMaxDbContext _context;
 
-		public ProdutosController(ShopMaxDbContext context)
+		public CategoriesController(ShopMaxDbContext context)
 		{
 			_context = context;
 		}
 
 		[AllowAnonymous]
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Product>>> GetProdutos()
+		public async Task<ActionResult<IEnumerable<Category>>> GetCategorias()
 		{
-			return await _context.Produtos.ToListAsync();
+			return await _context.Categories.ToListAsync();
 		}
 
-		[HttpGet("detalhes/{id:int}")]
+		[HttpGet("details/{id:int}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Product>> GetProduto(int id)
+		public async Task<ActionResult<Category>> GetCategoria(int id)
 		{
-			var produto = await _context.Produtos.FindAsync(id);
+			var categoria = await _context.Categories.FindAsync(id);
 
-			if (produto == null)
+			if (categoria == null)
 			{
 				return NotFound();
 			}
 
-			return produto;
+			return categoria;
 		}
 
-		[HttpPut("editar/{id:int}")]
+		[HttpPut("edit/{id:int}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> PutProduto(int id, Product produto)
+		public async Task<IActionResult> PutCategory(int id, Category category)
 		{
-			if (id != produto.Id)
+			if (id != category.Id)
 			{
 				return BadRequest();
 			}
 
-			_context.Entry(produto).State = EntityState.Modified;
+			_context.Entry(category).State = EntityState.Modified;
 
 			try
 			{
@@ -62,7 +61,7 @@ namespace ShopMax.API.Controllers
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				if (!ProdutoExists(id))
+				if (!CategoryExists(id))
 				{
 					return NotFound();
 				}
@@ -75,38 +74,38 @@ namespace ShopMax.API.Controllers
 			return NoContent();
 		}
 
-		[HttpPost("novo")]
+		[HttpPost("create")]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult<Product>> PostProduto(Product produto)
+		public async Task<ActionResult<Category>> PostCategory(Category category)
 		{
-			_context.Produtos.Add(produto);
+			_context.Categories.Add(category);
 			await _context.SaveChangesAsync();
 
-			return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
+			return CreatedAtAction("GetCategory", routeValues: new { id = category.Id }, category);
 		}
 
-		[HttpDelete("excluir/{id:int}")]
+		[HttpDelete("delete/{id:int}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> DeleteProduto(int id)
+		public async Task<IActionResult> DeleteCategory(int id)
 		{
-			var produto = await _context.Produtos.FindAsync(id);
-			if (produto == null)
+			var category = await _context.Categories.FindAsync(id);
+			if (category == null)
 			{
 				return NotFound();
 			}
 
-			_context.Produtos.Remove(produto);
+			_context.Categories.Remove(category);
 			await _context.SaveChangesAsync();
 
 			return NoContent();
 		}
 
-		private bool ProdutoExists(int id)
+		private bool CategoryExists(int id)
 		{
-			return _context.Produtos.Any(e => e.Id == id);
+			return _context.Categories.Any(e => e.Id == id);
 		}
 	}
 }

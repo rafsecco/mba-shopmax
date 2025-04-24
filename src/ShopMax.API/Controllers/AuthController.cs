@@ -11,7 +11,7 @@ using System.Text;
 namespace ShopMax.API.Controllers;
 
 [ApiController]
-[Route("api/conta")]
+[Route("api/account")]
 public class AuthController : ControllerBase
 {
 	private readonly SignInManager<Seller> _signInManager;
@@ -29,8 +29,8 @@ public class AuthController : ControllerBase
 	}
 
 
-	[HttpPost("registrar")]
-	public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
+	[HttpPost("register")]
+	public async Task<ActionResult> Register(RegisterUserViewModel registerUser)
 	{
 		if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
@@ -46,10 +46,10 @@ public class AuthController : ControllerBase
 		if (result.Succeeded)
 		{
 			await _signInManager.SignInAsync(user, false);
-			return Ok(GerarJwt());
+			return Ok(GenerateJwt());
 		}
 
-		return Problem("Falha ao registrar o usuário");
+		return Problem("Failed to register user");
 	}
 
 	[HttpPost("login")]
@@ -61,21 +61,21 @@ public class AuthController : ControllerBase
 
 		if (result.Succeeded)
 		{
-			return Ok(GerarJwt());
+			return Ok(GenerateJwt());
 		}
 
-		return Problem("Usuário ou senha incorretos.");
+		return Problem("Incorrect username or password.");
 	}
 
-	private string GerarJwt()
+	private string GenerateJwt()
 	{
 		var tokenHandler = new JwtSecurityTokenHandler();
-		var key = Encoding.ASCII.GetBytes(_jwtSettings.Segredo);
+		var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
 
 		var token = tokenHandler.CreateToken(new SecurityTokenDescriptor {
-			Issuer = _jwtSettings.Emissor,
-			Audience = _jwtSettings.Audiencia,
-			Expires = DateTime.UtcNow.AddHours(_jwtSettings.ExpiracaoHoras),
+			Issuer = _jwtSettings.Issuer,
+			Audience = _jwtSettings.Audience,
+			Expires = DateTime.UtcNow.AddHours(_jwtSettings.Expires),
 			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		});
 

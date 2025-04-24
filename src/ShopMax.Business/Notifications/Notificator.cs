@@ -4,25 +4,25 @@ namespace ShopMax.Business.Notifications;
 
 public class Notificator : INotificator
 {
-	private List<Notification> _notificacoes;
+	private List<Notification> _notifications;
 
 	public Notificator()
 	{
-		_notificacoes = new List<Notification>();
+		_notifications = new List<Notification>();
 	}
 
-	public void Handle(Notification notificacao)
+	public void Handle(Notification notification)
 	{
-		_notificacoes.Add(notificacao);
+		_notifications.Add(notification);
 	}
 
-	public List<Notification> ObterNotificacoes()
+	public List<Notification> GetNotifications()
 	{
-		return _notificacoes;
+		return _notifications;
 	}
 
-	public bool TemNotificacao()
+	public bool HasNotification()
 	{
-		return _notificacoes.Any();
+		return _notifications.Any();
 	}
 }

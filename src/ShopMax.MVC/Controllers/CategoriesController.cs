@@ -8,7 +8,7 @@ using ShopMax.MVC.Models;
 namespace ShopMax.MVC.Controllers;
 
 //[Authorize]
-[Route("categorias")]
+[Route("category")]
 public class CategoriesController : BaseController
 {
 	private readonly ICategoryService _categoryService;
@@ -24,16 +24,16 @@ public class CategoriesController : BaseController
 	}
 
 	[AllowAnonymous]
-	[Route("lista-de-categorias")]
+	[Route("list")]
 	public async Task<IActionResult> Index()
 	{
-		return View(_mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.ObterTodos()));
+		return View(_mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.GetAll()));
 	}
 
-	[Route("dados-da-categoria/{id:int}")]
+	[Route("details/{id:int}")]
 	public async Task<IActionResult> Details(int id)
 	{
-		var categoryViewModel = await ObterCategoriaModel(id);
+		var categoryViewModel = await GetCategoryModel(id);
 
 		if (categoryViewModel == null)
 		{
@@ -43,32 +43,32 @@ public class CategoriesController : BaseController
 		return View(categoryViewModel);
 	}
 
-	[Route("nova-categoria")]
+	[Route("create")]
 	public IActionResult Create()
 	{
 		return View();
 	}
 
-	[Route("nova-categoria")]
+	[Route("create")]
 	[HttpPost]
 	public async Task<IActionResult> Create(CategoryViewModel categoryViewModel)
 	{
 		if (!ModelState.IsValid) return View(categoryViewModel);
 
 		var category = _mapper.Map<Category>(categoryViewModel);
-		await _categoryService.Adicionar(category);
+		await _categoryService.Add(category);
 
-		if (!OperacaoValida()) return View(categoryViewModel);
+		if (!ValidateOperation()) return View(categoryViewModel);
 
-		TempData["Sucesso"] = "Categoria criada com sucesso!";
+		TempData["Success"] = "Category created successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	[Route("editar-categoria/{id:int}")]
+	[Route("edit/{id:int}")]
 	public async Task<IActionResult> Edit(int id)
 	{
-		var categoryViewModel = await ObterCategoriaModel(id);
+		var categoryViewModel = await GetCategoryModel(id);
 
 		if (categoryViewModel == null)
 		{
@@ -78,7 +78,7 @@ public class CategoriesController : BaseController
 		return View(categoryViewModel);
 	}
 
-	[Route("editar-categoria/{id:int}")]
+	[Route("edit/{id:int}")]
 	[HttpPost]
 	public async Task<IActionResult> Edit(int id, CategoryViewModel categoryViewModel)
 	{
@@ -87,19 +87,19 @@ public class CategoriesController : BaseController
 		if (!ModelState.IsValid) return View(categoryViewModel);
 
 		var category = _mapper.Map<Category>(categoryViewModel);
-		await _categoryService.Atualizar(category);
+		await _categoryService.Update(category);
 
-		if (!OperacaoValida()) return View(await ObterCategoriaModel(id));
+		if (!ValidateOperation()) return View(await GetCategoryModel(id));
 
-		TempData["Sucesso"] = "Categoria editada com sucesso!";
+		TempData["Success"] = "Category edited successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	[Route("excluir-categoria/{id:int}")]
+	[Route("delete/{id:int}")]
 	public async Task<IActionResult> Delete(int id)
 	{
-		var categoryViewModel = await ObterCategoriaModel(id);
+		var categoryViewModel = await GetCategoryModel(id);
 
 		if (categoryViewModel == null)
 		{
@@ -109,26 +109,26 @@ public class CategoriesController : BaseController
 		return View(categoryViewModel);
 	}
 
-	[Route("excluir-categoria/{id:int}")]
+	[Route("delete/{id:int}")]
 	[HttpPost, ActionName("Delete")]
 	public async Task<IActionResult> DeleteConfirmed(int id)
 	{
-		var categoryViewModel = await ObterCategoriaModel(id);
+		var categoryViewModel = await GetCategoryModel(id);
 
 		if (categoryViewModel == null) return NotFound();
 
-		await _categoryService.Deletar(id);
+		await _categoryService.Delete(id);
 
-		if (!OperacaoValida()) return View(categoryViewModel);
+		if (!ValidateOperation()) return View(categoryViewModel);
 
-		TempData["Sucesso"] = "Categoria excluida com sucesso!";
+		TempData["Success"] = "Category deleted successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	private async Task<CategoryViewModel> ObterCategoriaModel(int id)
+	private async Task<CategoryViewModel> GetCategoryModel(int id)
 	{
-		return _mapper.Map<CategoryViewModel>(await _categoryService.ObterPorId(id));
+		return _mapper.Map<CategoryViewModel>(await _categoryService.GetById(id));
 	}
 
 }

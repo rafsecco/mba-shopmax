@@ -13,49 +13,49 @@ public class ProductService : BaseService, IProductService
 	{
 		_productRepository = produtoRepository;
 	}
-	public async Task<IEnumerable<Product>> ObterTodos()
+	public async Task<IEnumerable<Product>> GetAll()
 	{
-		return await _productRepository.ObterTodos();
+		return await _productRepository.GetAll();
 	}
 
-	public async Task<Product> ObterPorId(int id)
+	public async Task<Product> GetById(int id)
 	{
-		return await _productRepository.ObterPorId(id);
+		return await _productRepository.GetById(id);
 	}
 
-	public async Task<IEnumerable<Product>> Buscar(Expression<Func<Product, bool>> predicate)
+	public async Task<IEnumerable<Product>> Find(Expression<Func<Product, bool>> predicate)
 	{
-		return await _productRepository.Buscar(predicate);
+		return await _productRepository.Find(predicate);
 	}
 
-	public async Task<IEnumerable<Product>> ObterProdutosDaCategoria(int id)
+	public async Task<IEnumerable<Product>> GetProductsFromCategory(int id)
 	{
-		return await _productRepository.ObterPorCategoria(id);
+		return await _productRepository.GetByCategory(id);
 	}
 
-	public async Task Adicionar(Product produto)
+	public async Task Add(Product produto)
 	{
-		if (!ExecutarValidacao(new ProductValidation(), produto)) return;
+		if (!RunValidation(new ProductValidation(), produto)) return;
 
-		var produtoExistente = _productRepository.ObterPorId(produto.Id);
+		var produtoExistente = _productRepository.GetById(produto.Id);
 
 		if (produtoExistente != null)
 		{
-			Notificar("Já existe um produto com o ID informado!");
+			Notify("Já existe um produto com o ID informado!");
 			return;
 		}
 
-		await _productRepository.Adicionar(produto);
+		await _productRepository.Add(produto);
 	}
 
-	public async Task Atualizar(Product produto)
+	public async Task Update(Product produto)
 	{
-		if (!ExecutarValidacao(new ProductValidation(), produto)) return;
-		await _productRepository.Atualizar(produto);
+		if (!RunValidation(new ProductValidation(), produto)) return;
+		await _productRepository.Update(produto);
 	}
 
-	public async Task Deletar(int id)
+	public async Task Delete(int id)
 	{
-		await _productRepository.Deletar(id);
+		await _productRepository.Delete(id);
 	}
 }

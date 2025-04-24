@@ -8,35 +8,35 @@ namespace ShopMax.Business.Services;
 
 public abstract class BaseService
 {
-	private readonly INotificator _notificador;
+	private readonly INotificator _notifier;
 
-	protected BaseService(INotificator notificador)
+	protected BaseService(INotificator notifier)
 	{
-		_notificador = notificador;
+		_notifier = notifier;
 	}
 
-	protected void Notificar(ValidationResult validationResult)
+	protected void Notify(ValidationResult validationResult)
 	{
 		foreach (var item in validationResult.Errors)
 		{
-			Notificar(item.ErrorMessage);
+			Notify(item.ErrorMessage);
 		}
 	}
 
-	protected void Notificar(string mensagem)
+	protected void Notify(string message)
 	{
-		_notificador.Handle(new Notification(mensagem));
+		_notifier.Handle(new Notification(message));
 	}
 
-	protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade)
+	protected bool RunValidation<TV, TE>(TV validation, TE entity)
 		where TV : AbstractValidator<TE>
 		where TE : Entity
 	{
-		var validator = validacao.Validate(entidade);
+		var validator = validation.Validate(entity);
 
 		if (validator.IsValid) return true;
 
-		Notificar(validator);
+		Notify(validator);
 
 		return false;
 	}

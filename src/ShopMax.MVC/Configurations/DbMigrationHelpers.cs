@@ -36,17 +36,17 @@ public static class DbMigrationHelpers
 
 	private static async Task EnsureSeedTables(ShopMaxDbContext context, IServiceProvider serviceProvider)
 	{
-		if (!context.Categorias.Any())
+		if (!context.Categories.Any())
 		{
-			Category[] categorias =
+			Category[] categories =
 			{
-				new() { Nome = "Bebidas", Descricao = "Bebidas" },
-				new() { Nome = "Alimentos", Descricao = "Alimentos" },
-				new() { Nome = "Limpeza", Descricao = "Limpeza" },
-				new() { Nome = "Higiene", Descricao = "Higiene" },
-				new() { Nome = "Outros", Descricao = "Outros" }
+				new() { Name = "Bebidas", Description = "Bebidas" },
+				new() { Name = "Alimentos", Description = "Alimentos" },
+				new() { Name = "Limpeza", Description = "Limpeza" },
+				new() { Name = "Higiene", Description = "Higiene" },
+				new() { Name = "Outros", Description = "Outros" }
 			};
-			await context.Categorias.AddRangeAsync(categorias);
+			await context.Categories.AddRangeAsync(categories);
 			await context.SaveChangesAsync();
 		}
 
@@ -89,20 +89,20 @@ public static class DbMigrationHelpers
 			await context.SaveChangesAsync();
 		}
 
-		if (!context.Produtos.Any())
+		if (!context.Products.Any())
 		{
-			Product[] produtos =
+			Product[] products =
 			{
-				new Product() { Nome = "Cerveja", Descricao = "Cerveja", CategoriaId = 1, Preco = 5.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
-				new() { Nome = "Refrigerante", Descricao = "Refrigerante", CategoriaId = 1, Preco = 3.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
-				new() { Nome = "Arroz", Descricao = "Arroz", CategoriaId = 2, Preco = 2.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
-				new() { Nome = "Feijão", Descricao = "Feijão", CategoriaId = 2, Preco = 4.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
-				new() { Nome = "Detergente", Descricao = "Detergente", CategoriaId = 3, Preco = 1.50M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
-				new() { Nome = "Sabão em pó", Descricao = "Sabão em pó", CategoriaId = 3, Preco = 6.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 },
-				new() { Nome = "Sabonete", Descricao = "Sabonete", CategoriaId = 4, Preco = 2.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 1 },
-				new() { Nome = "Shampoo", Descricao = "Shampoo", CategoriaId = 4, Preco = 10.00M, Ativo = true, QuantidadeEstoque = 100, Imagem = "teste.jpg", VendedorId = 2 }
+				new Product() { Name = "Cerveja", Description = "Cerveja", CategoryId = 1, Price = 5.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
+				new() { Name = "Refrigerante", Description = "Refrigerante", CategoryId = 1, Price = 3.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
+				new() { Name = "Arroz", Description = "Arroz", CategoryId = 2, Price = 2.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
+				new() { Name = "Feijão", Description = "Feijão", CategoryId = 2, Price = 4.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
+				new() { Name = "Detergente", Description = "Detergente", CategoryId = 3, Price = 1.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
+				new() { Name = "Sabão em pó", Description = "Sabão em pó", CategoryId = 3, Price = 6.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
+				new() { Name = "Sabonete", Description = "Sabonete", CategoryId = 4, Price = 2.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
+				new() { Name = "Shampoo", Description = "Shampoo", CategoryId = 4, Price = 10.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 }
 			};
-			await context.Produtos.AddRangeAsync(produtos);
+			await context.Products.AddRangeAsync(products);
 			await context.SaveChangesAsync();
 		}
 	}

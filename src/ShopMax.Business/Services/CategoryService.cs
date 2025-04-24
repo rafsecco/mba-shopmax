@@ -14,24 +14,24 @@ public class CategoryService : BaseService, ICategoryService
 		_categoryRepository = categoryRepository;
 	}
 
-	public async Task<IEnumerable<Category>> ObterTodos()
+	public async Task<IEnumerable<Category>> GetAll()
 	{
-		return await _categoryRepository.ObterTodos();
+		return await _categoryRepository.GetAll();
 	}
 
-	public async Task<Category> ObterPorId(int id)
+	public async Task<Category> GetById(int id)
 	{
-		return await _categoryRepository.ObterPorId(id);
+		return await _categoryRepository.GetById(id);
 	}
 
-	public async Task<IEnumerable<Category>> Buscar(Expression<Func<Category, bool>> predicate)
+	public async Task<IEnumerable<Category>> Find(Expression<Func<Category, bool>> predicate)
 	{
-		return await _categoryRepository.Buscar(predicate);
+		return await _categoryRepository.Find(predicate);
 	}
 
-	public async Task Adicionar(Category Categoria)
+	public async Task Add(Category Categoria)
 	{
-		await _categoryRepository.Adicionar(Categoria);
+		await _categoryRepository.Add(Categoria);
 
 		//if (!ExecutarValidacao(new CategoryValidation(), Categoria)) return;
 
@@ -46,14 +46,14 @@ public class CategoryService : BaseService, ICategoryService
 		//await _categoryRepository.Adicionar(Categoria);
 	}
 
-	public async Task Atualizar(Category Categoria)
+	public async Task Update(Category Categoria)
 	{
 		//if (!ExecutarValidacao(new CategoryValidation(), Categoria)) return;
-		await _categoryRepository.Atualizar(Categoria);
+		await _categoryRepository.Update(Categoria);
 	}
 
-	public async Task Deletar(int id)
+	public async Task Delete(int id)
 	{
-		await _categoryRepository.Deletar(id);
+		await _categoryRepository.Delete(id);
 	}
 }

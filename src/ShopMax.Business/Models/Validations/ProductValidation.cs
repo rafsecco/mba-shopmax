@@ -6,15 +6,16 @@ public class ProductValidation : AbstractValidator<Product>
 {
 	public ProductValidation()
 	{
-		RuleFor(c => c.Nome)
-			.NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-			.Length(2, 200).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+		RuleFor(c => c.Name)
+			.NotEmpty().WithMessage("The {PropertyName} field needs to be provided.")
+			.Length(2, 200).WithMessage("The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.");
 
-		RuleFor(c => c.Descricao)
-			.NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-			.Length(2, 200).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+		RuleFor(c => c.Description)
+			.NotEmpty().WithMessage("The {PropertyName} field needs to be provided.")
+			.Length(2, 200).WithMessage("The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.");
 
-		RuleFor(c => c.Preco)
-			.GreaterThan(0).WithMessage("O campo {PropertyName} precisa ser maior que {ComparisonValue}");
+		RuleFor(c => c.Price)
+			.NotEmpty().WithMessage("The {PropertyName} field needs to be provided.")
+			.GreaterThan(0).WithMessage("The {PropertyName} field must be greater than {ComparisonValue}.");
 	}
 }

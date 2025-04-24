@@ -8,14 +8,14 @@ public class CategoryMapping : IEntityTypeConfiguration<Category>
 {
 	public void Configure(EntityTypeBuilder<Category> builder)
 	{
-		builder.ToTable("tb_Categorias");
+		builder.ToTable("tb_Categories");
 		builder.HasKey(x => x.Id);
 
-		builder.Property(x => x.Nome)
+		builder.Property(x => x.Name)
 			.IsRequired()
 			.HasMaxLength(100);
 
-		builder.Property(x => x.Descricao)
+		builder.Property(x => x.Description)
 			.IsRequired()
 			.HasMaxLength(200);
 	}

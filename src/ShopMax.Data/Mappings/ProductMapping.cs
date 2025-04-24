@@ -8,25 +8,25 @@ public class ProductMapping : IEntityTypeConfiguration<Product>
 {
 	public void Configure(EntityTypeBuilder<Product> builder)
 	{
-		builder.ToTable("tb_Produtos");
+		builder.ToTable("tb_Products");
 		builder.HasKey(x => x.Id);
 
-		builder.Property(x => x.Nome)
+		builder.Property(x => x.Name)
 			.IsRequired()
 			.HasMaxLength(100);
 
-		builder.Property(x => x.Descricao)
+		builder.Property(x => x.Description)
 			.IsRequired()
 			.HasMaxLength(200);
 
-		builder.Property(x => x.Preco)
+		builder.Property(x => x.Price)
 			.IsRequired()
-			.HasPrecision(10, 2);
+			.HasPrecision(18, 2);
 
-		builder.Property(x => x.QuantidadeEstoque)
+		builder.Property(x => x.QuantityStock)
 			.IsRequired();
 
-		builder.Property(x => x.Imagem)
+		builder.Property(x => x.Image)
 			.HasMaxLength(200);
 	}
 }

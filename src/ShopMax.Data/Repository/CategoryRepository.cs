@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Interfaces;
 using ShopMax.Business.Models;
 

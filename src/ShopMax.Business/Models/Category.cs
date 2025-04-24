@@ -2,7 +2,7 @@ namespace ShopMax.Business.Models;
 
 public class Category : Entity
 {
-	public string Descricao { get; set; }
+	public string? Description { get; set; }
 
-	public IEnumerable<Product>? Produtos { get; set; }
+	public IEnumerable<Product>? ProductsList { get; set; }
 }

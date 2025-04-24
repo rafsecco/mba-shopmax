@@ -18,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
 	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 	{
-		Description = "Insira o token JWT desta maneira: 'Bearer {seu token}'.\n\r\r\n Example: \"Bearer 12345abcdef\"",
+		Description = "Insert the JWT token like this: 'Bearer {your token}'.\n\r\r\n Example: \"Bearer 12345abcdef\"",
 		Name = "Authorization",
 		Scheme = "Bearer",
 		BearerFormat = "JWT",
@@ -62,7 +62,7 @@ builder.Services.AddIdentity<Seller, IdentityRole>()
 var JwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(JwtSettingsSection);
 var jwtSettings = JwtSettingsSection.Get<JwtSettings>();
-var key = Encoding.ASCII.GetBytes(jwtSettings.Segredo);
+var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
 builder.Services.AddAuthentication(options =>
 {
 	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,8 +75,8 @@ builder.Services.AddAuthentication(options =>
 		IssuerSigningKey = new SymmetricSecurityKey(key),
 		ValidateIssuer = true,
 		ValidateAudience = true,
-		ValidAudience = jwtSettings.Audiencia,
-		ValidIssuer = jwtSettings.Emissor
+		ValidAudience = jwtSettings.Audience,
+		ValidIssuer = jwtSettings.Issuer
 	};
 });
 #endregion

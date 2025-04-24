@@ -4,7 +4,7 @@ namespace ShopMax.Business.Interfaces;
 
 public interface INotificator
 {
-	bool TemNotificacao();
-	List<Notification> ObterNotificacoes();
+	bool HasNotification();
+	List<Notification> GetNotifications();
 	void Handle(Notification notificacao);
 }

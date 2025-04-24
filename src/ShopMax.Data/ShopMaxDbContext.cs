@@ -8,9 +8,9 @@ namespace ShopMax.Data;
 public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int>
 {
 
-	public DbSet<Seller> Vendedor { get; set; }
-	public DbSet<Product> Produtos { get; set; }
-	public DbSet<Category> Categorias{ get; set; }
+	public DbSet<Seller> Seller { get; set; }
+	public DbSet<Product> Products { get; set; }
+	public DbSet<Category> Categories { get; set; }
 
 	public ShopMaxDbContext(DbContextOptions<ShopMaxDbContext> options) : base(options)
 	{
@@ -40,16 +40,16 @@ public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int
 
 	public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{
-		foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+		foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("CreatedAt") != null))
 		{
 			if (entry.State == EntityState.Added)
 			{
-				entry.Property("DataCadastro").CurrentValue = DateTime.Now;
+				entry.Property("CreatedAt").CurrentValue = DateTime.Now;
 			}
 
 			if (entry.State == EntityState.Modified)
 			{
-				entry.Property("DataCadastro").IsModified = false;
+				entry.Property("CreatedAt").IsModified = false;
 			}
 		}
 
@@ -58,16 +58,16 @@ public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int
 
 	public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
 	{
-		foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+		foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("CreatedAt") != null))
 		{
 			if (entry.State == EntityState.Added)
 			{
-				entry.Property("DataCadastro").CurrentValue = DateTime.Now;
+				entry.Property("CreatedAt").CurrentValue = DateTime.Now;
 			}
 
 			if (entry.State == EntityState.Modified)
 			{
-				entry.Property("DataCadastro").IsModified = false;
+				entry.Property("CreatedAt").IsModified = false;
 			}
 		}
 

@@ -8,7 +8,7 @@ using ShopMax.MVC.Models;
 namespace ShopMax.MVC.Controllers;
 
 //[Authorize]
-[Route("produtos")]
+[Route("product")]
 public class ProductsController : BaseController
 {
 	private readonly IProductService _productService;
@@ -27,16 +27,16 @@ public class ProductsController : BaseController
 	}
 
 	[AllowAnonymous]
-	[Route("lista-de-produtos")]
+	[Route("list")]
 	public async Task<IActionResult> Index()
 	{
-		return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productService.ObterTodos()));
+		return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productService.GetAll()));
 	}
 
-	[Route("dados-do-produto/{id:int}")]
+	[Route("details/{id:int}")]
 	public async Task<IActionResult> Details(int id)
 	{
-		var productViewModel = await ObterProdutoModel(id);
+		var productViewModel = await GetProductModel(id);
 
 		if (productViewModel == null)
 		{
@@ -46,34 +46,34 @@ public class ProductsController : BaseController
 		return View(productViewModel);
 	}
 
-	[Route("novo-produto")]
+	[Route("create")]
 	public async Task<IActionResult> Create()
 	{
-		var produtoViewModel = await PopularCategorias(new ProductViewModel());
+		var produtoViewModel = await GetCategories(new ProductViewModel());
 
 		return View(produtoViewModel);
 	}
 
-	[Route("novo-produto")]
+	[Route("create")]
 	[HttpPost]
 	public async Task<IActionResult> Create(ProductViewModel productViewModel)
 	{
 		if (!ModelState.IsValid) return View(productViewModel);
 
 		var product = _mapper.Map<Product>(productViewModel);
-		await _productService.Adicionar(product);
+		await _productService.Add(product);
 
-		if (!OperacaoValida()) return View(productViewModel);
+		if (!ValidateOperation()) return View(productViewModel);
 
-		TempData["Sucesso"] = "Produto criado com sucesso!";
+		TempData["Success"] = "Product created successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	[Route("editar-protudo/{id:int}")]
+	[Route("edit/{id:int}")]
 	public async Task<IActionResult> Edit(int id)
 	{
-		var productViewModel = await ObterProdutoModel(id);
+		var productViewModel = await GetProductModel(id);
 
 		if (productViewModel == null)
 		{
@@ -83,7 +83,7 @@ public class ProductsController : BaseController
 		return View(productViewModel);
 	}
 
-	[Route("editar-protudo/{id:int}")]
+	[Route("edit/{id:int}")]
 	[HttpPost]
 	public async Task<IActionResult> Edit(int id, ProductViewModel productViewModel)
 	{
@@ -92,19 +92,19 @@ public class ProductsController : BaseController
 		if (!ModelState.IsValid) return View(productViewModel);
 
 		var product = _mapper.Map<Product>(productViewModel);
-		await _productService.Atualizar(product);
+		await _productService.Update(product);
 
-		if (!OperacaoValida()) return View(await ObterProdutoModel(id));
+		if (!ValidateOperation()) return View(await GetProductModel(id));
 
-		TempData["Sucesso"] = "Produto editado com sucesso!";
+		TempData["Success"] = "Product edited successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	[Route("excluir-produto/{id:int}")]
+	[Route("delete/{id:int}")]
 	public async Task<IActionResult> Delete(int id)
 	{
-		var productViewModel = await ObterProdutoModel(id);
+		var productViewModel = await GetProductModel(id);
 
 		if (productViewModel == null)
 		{
@@ -114,33 +114,33 @@ public class ProductsController : BaseController
 		return View(productViewModel);
 	}
 
-	[Route("excluir-produto/{id:int}")]
+	[Route("delete/{id:int}")]
 	[HttpPost, ActionName("Delete")]
 	public async Task<IActionResult> DeleteConfirmed(int id)
 	{
-		var productViewModel = await ObterProdutoModel(id);
+		var productViewModel = await GetProductModel(id);
 
 		if (productViewModel == null) return NotFound();
 
-		await _productService.Deletar(id);
+		await _productService.Delete(id);
 
-		if (!OperacaoValida()) return View(productViewModel);
+		if (!ValidateOperation()) return View(productViewModel);
 
-		TempData["Sucesso"] = "Produto excluido com sucesso!";
+		TempData["Success"] = "Product deleted successfully!";
 
 		return RedirectToAction("Index");
 	}
 
-	private async Task<ProductViewModel> ObterProdutoModel(int id)
+	private async Task<ProductViewModel> GetProductModel(int id)
 	{
-		var productViewModel = _mapper.Map<ProductViewModel>(await _productService.ObterPorId(id));
-		productViewModel = await PopularCategorias(productViewModel);
+		var productViewModel = _mapper.Map<ProductViewModel>(await _productService.GetById(id));
+		productViewModel = await GetCategories(productViewModel);
 		return productViewModel;
 	}
 
-	private async Task<ProductViewModel> PopularCategorias(ProductViewModel produto)
+	private async Task<ProductViewModel> GetCategories(ProductViewModel produto)
 	{
-		produto.Categorias = _mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.ObterTodos());
+		produto.Categories = _mapper.Map<IEnumerable<CategoryViewModel>>(await _categoryService.GetAll());
 		return produto;
 	}
 

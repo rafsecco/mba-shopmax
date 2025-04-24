@@ -1,7 +1,7 @@
 @model IEnumerable<ShopMax.MVC.Models.ProductViewModel>
 
 @{
-	ViewData["Title"] = "Lista de Produtos";
+	ViewData["Title"] = "Products List";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -9,38 +9,38 @@
 <vc:Summary></vc:Summary>
 
 <p>
-	<a class="btn btn-info" asp-action="Create">Novo Produto</a>
+	<a class="btn btn-info" asp-action="Create">New Product</a>
 </p>
 
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.Nome)
+				@Html.DisplayNameFor(model => model.Name)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Descricao)
+				@Html.DisplayNameFor(model => model.Description)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Preco)
+				@Html.DisplayNameFor(model => model.Price)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.QuantidadeEstoque)
+				@Html.DisplayNameFor(model => model.QuantityStock)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Ativo)
+				@Html.DisplayNameFor(model => model.Active)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Imagem)
+				@Html.DisplayNameFor(model => model.Image)
 			</th>
-@* 			<th>
-				@Html.DisplayNameFor(model => model.Categoria)
+			@* <th>
+				@Html.DisplayNameFor(model => model.Category)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Vendedor)
+				@Html.DisplayNameFor(model => model.Seller)
 			</th> *@
 			<th>
-				@Html.DisplayNameFor(model => model.DataCadastro)
+				@Html.DisplayNameFor(model => model.CreatedAt)
 			</th>
 			<th></th>
 		</tr>
@@ -50,31 +50,31 @@
 		{
 			<tr>
 				<td>
-					@Html.DisplayFor(modelItem => item.Nome)
+					@Html.DisplayFor(modelItem => item.Name)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Descricao)
+					@Html.DisplayFor(modelItem => item.Description)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Preco)
+					@Html.DisplayFor(modelItem => item.Price)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.QuantidadeEstoque)
+					@Html.DisplayFor(modelItem => item.QuantityStock)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Ativo)
+					@Html.DisplayFor(modelItem => item.Active)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Imagem)
+					@Html.DisplayFor(modelItem => item.Image)
 				</td>
-@* 				<td>
-					@Html.DisplayFor(modelItem => item.Categoria.Descricao)
+				@* <td>
+					@html.displayfor(modelitem => item.Category)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Vendedor.Id)
+					@html.displayfor(modelitem => item.Seller)
 				</td> *@
 				<td>
-					@Html.DisplayFor(modelItem => item.DataCadastro)
+					@Html.DisplayFor(modelItem => item.CreatedAt)
 				</td>
 				<td class="text-right">
 					<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>

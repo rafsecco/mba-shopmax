@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using ShopMax.Business.Models;
 
 namespace ShopMax.MVC.Models;
 
@@ -8,53 +9,43 @@ public class ProductViewModel
 {
 	public int Id { get; set; }
 
-	[Required(ErrorMessage = "O campo {0} precisa ser fornecido")]
-	[StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-	public string Nome { get; set; } = null!;
+	[Required(ErrorMessage = "The {PropertyName} field needs to be provided.")]
+	[StringLength(100, ErrorMessage = "The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.", MinimumLength = 2)]
+	public string Name { get; set; }
 
-	[DisplayName("Descrição")]
-	[Required(ErrorMessage = "O campo {0} precisa ser fornecido")]
-	[StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-	public string Descricao { get; set; }
+	[Required(ErrorMessage = "The {PropertyName} field needs to be provided.")]
+	[StringLength(200, ErrorMessage = "The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.", MinimumLength = 2)]
+	public string Description { get; set; }
 
-	
-	[Required(ErrorMessage = "O campo {0} precisa ser fornecido")]
-	[Range(0, double.MaxValue, ErrorMessage = "O preço não pode ser negativo.")]
+
+	[Required(ErrorMessage = "The Price field is mandatory.")]
+	[Range(0, double.MaxValue, ErrorMessage = "The price cannot be negative.")]
 	[Column(TypeName = "decimal(18,2)")]
-	[DisplayName("Preço")]
-	public decimal Preco { get; set; }
+	public decimal Price { get; set; }
 
-	[DisplayName("Quantidade em Estoque")]
-	[Required(ErrorMessage = "O campo {0} precisa ser fornecido.")]
-	[Range(0, int.MaxValue, ErrorMessage = "O valor precisa ser positivo")]
-	public int QuantidadeEstoque { get; set; }
 
-	[DisplayName("Ativo?")]
-	public bool Ativo { get; set; }
+	[Required(ErrorMessage = "The {PropertyName} field needs to be provided.")]
+	[Range(0, int.MaxValue, ErrorMessage = "The price cannot be negative.")]
+	[DisplayName("Quantity in Stock")]
+	public int QuantityStock { get; set; }
 
-	public string? Imagem { get; set; }
+	[DisplayName("Active?")]
+	public bool Active { get; set; }
 
-	[Display(Name = "Data de cadastro")]
-	public DateTime DataCadastro { get; set; } = DateTime.Now;
+	public string? Image { get; set; }
 
-	[NotMapped]
+	[Display(Name = "Created In")]
+	public DateTime CreatedAt { get; set; } = DateTime.Now;
+
 	public IFormFile ImageFile { get; set; }
 
+	public IEnumerable<CategoryViewModel> Categories { get; set; }
 
-	[Required(ErrorMessage = "O campo {0} é obrigatório")]
-	[DisplayName("Categoria")]
-	public int CategoriaId { get; set; }
+	// FK for Category
+	public int CategoryId { get; set; }
+	public CategoryViewModel Category { get; set; } = null!;
 
-	public CategoryViewModel Categoria { get; set; }
-
-	public IEnumerable<CategoryViewModel> Categorias { get; set; }
-
-
-
-	
-	//public Category Categoria { get; set; } = null!;
-
-	//// FK for Seller
-	//public int VendedorId { get; set; }
-	//public Seller Vendedor { get; set; } = null!;
+	// FK for Seller
+	public int SellerId { get; set; }
+	public Seller Seller { get; set; } = null!;
 }

@@ -14,8 +14,8 @@ public class SummaryViewComponent : ViewComponent
 
 	public async Task<IViewComponentResult> InvokeAsync()
 	{
-		var notificacoes = await Task.FromResult(_notificator.ObterNotificacoes());
-		notificacoes.ForEach(c => ViewData.ModelState.AddModelError(string.Empty, c.Mensagem));
+		var notificacoes = await Task.FromResult(_notificator.GetNotifications());
+		notificacoes.ForEach(c => ViewData.ModelState.AddModelError(string.Empty, c.Message));
 
 		return View();
 	}

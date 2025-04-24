@@ -6,12 +6,12 @@ public class CategoryValidation : AbstractValidator<Category>
 {
 	public CategoryValidation()
 	{
-		RuleFor(c => c.Nome)
-			.NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-			.Length(2, 100).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+		RuleFor(c => c.Name)
+			.NotEmpty().WithMessage("The {PropertyName} field needs to be provided.")
+			.Length(2, 100).WithMessage("The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.");
 
-		RuleFor(c => c.Descricao)
-			.NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-			.Length(2, 200).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+		RuleFor(c => c.Description)
+			.NotEmpty().WithMessage("The {PropertyName} field needs to be provided.")
+			.Length(2, 200).WithMessage("The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.");
 	}
 }
