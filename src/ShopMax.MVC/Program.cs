@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Models;
 using ShopMax.Data;
@@ -17,9 +18,11 @@ else
 		options.UseSqlServer(connectionString));
 }
 
+// Identity
 builder.Services
-	.AddDefaultIdentity<Seller>(options => options.SignIn.RequireConfirmedAccount = true)
-	.AddEntityFrameworkStores<ShopMaxDbContext>();
+	.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddEntityFrameworkStores<ShopMaxDbContext>()
+	.AddDefaultTokenProviders();
 
 builder.Services
 	.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
@@ -45,7 +48,7 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

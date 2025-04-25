@@ -11,11 +11,11 @@ public class ProductViewModel
 
 	[Required(ErrorMessage = "The {PropertyName} field needs to be provided.")]
 	[StringLength(100, ErrorMessage = "The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.", MinimumLength = 2)]
-	public string Name { get; set; }
+	public string? Name { get; set; }
 
 	[Required(ErrorMessage = "The {PropertyName} field needs to be provided.")]
 	[StringLength(200, ErrorMessage = "The {PropertyName} field must be between {MinLength} and {MaxLength} characters long.", MinimumLength = 2)]
-	public string Description { get; set; }
+	public string? Description { get; set; }
 
 
 	[Required(ErrorMessage = "The Price field is mandatory.")]
@@ -41,11 +41,11 @@ public class ProductViewModel
 
 	public IEnumerable<CategoryViewModel> Categories { get; set; }
 
-	// FK for Category
-	public int CategoryId { get; set; }
-	public CategoryViewModel Category { get; set; } = null!;
-
 	// FK for Seller
 	public int SellerId { get; set; }
 	public Seller Seller { get; set; } = null!;
+
+	// FK for Category
+	public int CategoryId { get; set; }
+	public CategoryViewModel Category { get; set; } = null!;
 }

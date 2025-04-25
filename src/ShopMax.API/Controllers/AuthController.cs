@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NuGet.Packaging.Signing;
 using ShopMax.API.Models;
 using ShopMax.Business.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,27 +13,34 @@ namespace ShopMax.API.Controllers;
 [Route("api/account")]
 public class AuthController : ControllerBase
 {
-	private readonly SignInManager<Seller> _signInManager;
-	private readonly UserManager<Seller> _userManager;
+	private readonly SignInManager<ApplicationUser> _signInManager;
+	private readonly UserManager<ApplicationUser> _userManager;
 	private readonly JwtSettings _jwtSettings;
 
 	public AuthController(
-		SignInManager<Seller> signInManager,
-		UserManager<Seller> userManager,
+		SignInManager<ApplicationUser> signInManager,
+		UserManager<ApplicationUser> userManager,
 		IOptions<JwtSettings> jwtSettings)
 	{
 		_signInManager = signInManager;
 		_userManager = userManager;
 		_jwtSettings = jwtSettings.Value;
+
+		if (_jwtSettings == null)
+		{
+			throw new InvalidOperationException("JwtSettings not injected correctly.");
+		}
 	}
 
 
 	[HttpPost("register")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	public async Task<ActionResult> Register(RegisterUserViewModel registerUser)
 	{
 		if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
-		var user = new Seller
+		var user = new ApplicationUser
 		{
 			UserName = registerUser.Email,
 			Email = registerUser.Email,

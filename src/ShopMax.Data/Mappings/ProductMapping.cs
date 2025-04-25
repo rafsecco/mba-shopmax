@@ -28,5 +28,10 @@ public class ProductMapping : IEntityTypeConfiguration<Product>
 
 		builder.Property(x => x.Image)
 			.HasMaxLength(200);
+
+		// Relationship 1:N between Seller and Product
+		builder.HasOne(x => x.Seller)
+			.WithMany(x => x.ProdutctsList)
+			.HasForeignKey(x => x.SellerId);
 	}
 }

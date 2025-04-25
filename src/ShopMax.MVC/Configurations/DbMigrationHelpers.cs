@@ -56,7 +56,7 @@ public static class DbMigrationHelpers
 
 			await context.Users.AddAsync(new()
 			{
-				Id = 1,
+				Id = Guid.NewGuid().ToString(),
 				UserName = string.Format(email, 1),
 				NormalizedUserName = string.Format(email, 1).ToUpper(),
 				Email = string.Format(email, 1),
@@ -72,7 +72,7 @@ public static class DbMigrationHelpers
 
 			await context.Users.AddAsync(new()
 			{
-				Id = 2,
+				Id = Guid.NewGuid().ToString(),
 				UserName = string.Format(email, 2),
 				NormalizedUserName = string.Format(email, 2).ToUpper(),
 				Email = string.Format(email, 2),

@@ -1,14 +1,12 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Models;
 
 namespace ShopMax.Data;
 
-public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int>
+public class ShopMaxDbContext : IdentityDbContext<ApplicationUser>
 {
-
-	public DbSet<Seller> Seller { get; set; }
+	public DbSet<Seller> Sellers { get; set; }
 	public DbSet<Product> Products { get; set; }
 	public DbSet<Category> Categories { get; set; }
 
@@ -29,7 +27,7 @@ public class ShopMaxDbContext : IdentityDbContext<Seller, IdentityRole<int>, int
 
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopMaxDbContext).Assembly);
 
-		// Para impedir que seja feito o deleteCascate
+		// To prevent deleteCascate from being performed
 		foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
 		{
 			relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;

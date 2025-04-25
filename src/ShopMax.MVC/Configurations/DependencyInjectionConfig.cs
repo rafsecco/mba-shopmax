@@ -16,9 +16,9 @@ public static class DependencyInjectionConfig
 		services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 		// Business
+		services.AddScoped<INotificator, Notificator>();
 		services.AddScoped<IProductService, ProductService>();
 		services.AddScoped<ICategoryService, CategoryService>();
-		services.AddScoped<INotificator, Notificator>();
 
 		return services;
 	}
