@@ -18,6 +18,8 @@ else
 		options.UseSqlServer(connectionString));
 }
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopMaxDbContext>();
+
 // Identity
 builder.Services
 	.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
