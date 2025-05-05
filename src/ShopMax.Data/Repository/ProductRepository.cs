@@ -13,11 +13,26 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		_context = context;
 	}
 
+	public async Task<List<Product>> GetAllWithCategory()
+	{
+		return await _context.Products
+			.Include(c => c.Category)
+			.ToListAsync();
+	}
+
 	public async Task<List<Product>> GetByCategory(int id)
 	{
 		return await _context.Products
 			.Include(c => c.Category)
 			.Where(c => c.CategoryId == id)
+			.ToListAsync();
+	}
+
+	public async Task<List<Product>> GetBySeller(int id)
+	{
+		return await _context.Products
+			.Include(c => c.Seller)
+			.Where(c => c.SellerId == id)
 			.ToListAsync();
 	}
 }

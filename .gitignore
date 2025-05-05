@@ -400,3 +400,16 @@ FodyWeavers.xsd
 # Local Database
 *.db
 *.db*
+
+# Upload files
+src/ShopMax.MVC/wwwroot/uploads/images/*
+!src/ShopMax.MVC/wwwroot/uploads/images/Beans_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Beer_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Detergent_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/NoImageAvaliable_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/NoImageAvaliable_1024.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Rise_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Soap_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Soda_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Washing_307.png
+!src/ShopMax.MVC/wwwroot/uploads/images/Shampoo_307.png

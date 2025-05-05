@@ -9,13 +9,18 @@ public class ProductService : BaseService, IProductService
 {
 	private readonly IProductRepository _productRepository;
 
-	public ProductService(IProductRepository produtoRepository, INotificator notificador) : base(notificador)
+	public ProductService(IProductRepository productRepository, INotificator notificador) : base(notificador)
 	{
-		_productRepository = produtoRepository;
+		_productRepository = productRepository;
 	}
 	public async Task<IEnumerable<Product>> GetAll()
 	{
 		return await _productRepository.GetAll();
+	}
+
+	public async Task<IEnumerable<Product>> GetAllWithCategory()
+	{
+		return await _productRepository.GetAllWithCategory();
 	}
 
 	public async Task<Product> GetById(int id)
@@ -33,25 +38,21 @@ public class ProductService : BaseService, IProductService
 		return await _productRepository.GetByCategory(id);
 	}
 
-	public async Task Add(Product produto)
+	public async Task<IEnumerable<Product>> GetProductsFromSeller(int id)
 	{
-		if (!RunValidation(new ProductValidation(), produto)) return;
-
-		var produtoExistente = _productRepository.GetById(produto.Id);
-
-		if (produtoExistente != null)
-		{
-			Notify("Já existe um produto com o ID informado!");
-			return;
-		}
-
-		await _productRepository.Add(produto);
+		return await _productRepository.GetBySeller(id);
 	}
 
-	public async Task Update(Product produto)
+	public async Task Add(Product product)
 	{
-		if (!RunValidation(new ProductValidation(), produto)) return;
-		await _productRepository.Update(produto);
+		if (!RunValidation(new ProductValidation(), product)) return;
+		await _productRepository.Add(product);
+	}
+
+	public async Task Update(Product product)
+	{
+		if (!RunValidation(new ProductValidation(), product)) return;
+		await _productRepository.Update(product);
 	}
 
 	public async Task Delete(int id)

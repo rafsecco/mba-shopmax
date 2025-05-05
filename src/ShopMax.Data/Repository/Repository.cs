@@ -18,12 +18,12 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
 	public async Task<IEnumerable<TEntity>> GetAll()
 	{
-		return await _dbSet.ToListAsync();
+		return await _dbSet.AsNoTracking().ToListAsync();
 	}
 
 	public async Task<TEntity> GetById(int id)
 	{
-		return await _dbSet.FindAsync(id);
+		return await _dbSet.AsNoTracking().SingleAsync(x => x.Id == id);
 	}
 
 	public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)

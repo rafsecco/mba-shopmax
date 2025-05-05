@@ -40,67 +40,86 @@ public static class DbMigrationHelpers
 		{
 			Category[] categories =
 			{
-				new() { Name = "Bebidas", Description = "Bebidas" },
-				new() { Name = "Alimentos", Description = "Alimentos" },
-				new() { Name = "Limpeza", Description = "Limpeza" },
-				new() { Name = "Higiene", Description = "Higiene" },
-				new() { Name = "Outros", Description = "Outros" }
+				new() { Name = "Drinks", Description = "Drinks" },
+				new() { Name = "Food", Description = "Food" },
+				new() { Name = "Cleaning", Description = "Cleaning" },
+				new() { Name = "Hygiene", Description = "Hygiene" },
+				new() { Name = "Others", Description = "Others" }
 			};
 			await context.Categories.AddRangeAsync(categories);
 			await context.SaveChangesAsync();
 		}
 
+		#region Users and Seller
+		var userId_1 = Guid.NewGuid();
+		var userId_2 = Guid.NewGuid();
+		string email = "test{0}@shopmax.com";
+
 		if (!context.Users.Any())
 		{
-			string email = "teste{0}@shopmax.com";
-
-			await context.Users.AddAsync(new()
+			ApplicationUser[] users =
 			{
-				Id = Guid.NewGuid().ToString(),
-				UserName = string.Format(email, 1),
-				NormalizedUserName = string.Format(email, 1).ToUpper(),
-				Email = string.Format(email, 1),
-				NormalizedEmail = string.Format(email, 1).ToUpper(),
-				AccessFailedCount = 0,
-				LockoutEnabled = false,
-				PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Teste@123"),
-				TwoFactorEnabled = false,
-				ConcurrencyStamp = Guid.NewGuid().ToString(),
-				EmailConfirmed = true,
-				SecurityStamp = Guid.NewGuid().ToString(),
-			});
+				new ApplicationUser()
+				{
+					Id = userId_1.ToString(),
+					UserName = string.Format(email, 1),
+					NormalizedUserName = string.Format(email, 1).ToUpper(),
+					Email = string.Format(email, 1),
+					NormalizedEmail = string.Format(email, 1).ToUpper(),
+					AccessFailedCount = 0,
+					LockoutEnabled = false,
+					PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Test@123"),
+					TwoFactorEnabled = false,
+					ConcurrencyStamp = Guid.NewGuid().ToString(),
+					EmailConfirmed = true,
+					SecurityStamp = Guid.NewGuid().ToString()
+				},
+				new ApplicationUser()
+				{
+					Id = userId_2.ToString(),
+					UserName = string.Format(email, 2),
+					NormalizedUserName = string.Format(email, 2).ToUpper(),
+					Email = string.Format(email, 2),
+					NormalizedEmail = string.Format(email, 2).ToUpper(),
+					AccessFailedCount = 0,
+					LockoutEnabled = false,
+					PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Teste@123"),
+					TwoFactorEnabled = false,
+					ConcurrencyStamp = Guid.NewGuid().ToString(),
+					EmailConfirmed = true,
+					SecurityStamp = Guid.NewGuid().ToString(),
+				}
+			};
 
-			await context.Users.AddAsync(new()
-			{
-				Id = Guid.NewGuid().ToString(),
-				UserName = string.Format(email, 2),
-				NormalizedUserName = string.Format(email, 2).ToUpper(),
-				Email = string.Format(email, 2),
-				NormalizedEmail = string.Format(email, 2).ToUpper(),
-				AccessFailedCount = 0,
-				LockoutEnabled = false,
-				PasswordHash = new PasswordHasher<Seller>().HashPassword(null, "Teste@123"),
-				TwoFactorEnabled = false,
-				ConcurrencyStamp = Guid.NewGuid().ToString(),
-				EmailConfirmed = true,
-				SecurityStamp = Guid.NewGuid().ToString(),
-			});
-
+			await context.Users.AddRangeAsync(users);
 			await context.SaveChangesAsync();
 		}
+
+		if (!context.Sellers.Any())
+		{
+			Seller[] sellers =
+			{
+				new Seller() { Name = "Test 1", ApplicationUserId = userId_1.ToString() },
+				new Seller() { Name = "Test 2", ApplicationUserId = userId_2.ToString() },
+			};
+
+			await context.Sellers.AddRangeAsync(sellers);
+			await context.SaveChangesAsync();
+		}
+		#endregion
 
 		if (!context.Products.Any())
 		{
 			Product[] products =
 			{
-				new Product() { Name = "Cerveja", Description = "Cerveja", CategoryId = 1, Price = 5.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
-				new() { Name = "Refrigerante", Description = "Refrigerante", CategoryId = 1, Price = 3.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
-				new() { Name = "Arroz", Description = "Arroz", CategoryId = 2, Price = 2.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
-				new() { Name = "Feijão", Description = "Feijão", CategoryId = 2, Price = 4.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
-				new() { Name = "Detergente", Description = "Detergente", CategoryId = 3, Price = 1.50M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
-				new() { Name = "Sabão em pó", Description = "Sabão em pó", CategoryId = 3, Price = 6.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 },
-				new() { Name = "Sabonete", Description = "Sabonete", CategoryId = 4, Price = 2.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 1 },
-				new() { Name = "Shampoo", Description = "Shampoo", CategoryId = 4, Price = 10.00M, Active = true, QuantityStock = 100, Image = "teste.jpg", SellerId = 2 }
+				new Product() { Name = "Beer", Description = "Beer", CategoryId = 1, Price = 5.00M, Active = true, QuantityStock = 100, Image = "Beer_307.png", SellerId = 1 },
+				new() { Name = "Soda", Description = "Soda", CategoryId = 1, Price = 3.50M, Active = true, QuantityStock = 100, Image = "Soda_307.png", SellerId = 2 },
+				new() { Name = "Rice", Description = "Rice", CategoryId = 2, Price = 2.50M, Active = true, QuantityStock = 100, Image = "Rise_307.png", SellerId = 1 },
+				new() { Name = "Beans", Description = "Beans", CategoryId = 2, Price = 4.00M, Active = true, QuantityStock = 100, Image = "Beans_307.png", SellerId = 2 },
+				new() { Name = "Detergent", Description = "Detergent", CategoryId = 3, Price = 1.50M, Active = true, QuantityStock = 100, Image = "Detergent_307.png", SellerId = 1 },
+				new() { Name = "Washing powder", Description = "Washing powder", CategoryId = 3, Price = 6.00M, Active = true, QuantityStock = 100, Image = "Washing_307.png", SellerId = 2 },
+				new() { Name = "Soap", Description = "Soap", CategoryId = 4, Price = 2.00M, Active = true, QuantityStock = 100, Image = "Soap_307.png", SellerId = 1 },
+				new() { Name = "Shampoo", Description = "Shampoo", CategoryId = 4, Price = 10.00M, Active = true, QuantityStock = 100, Image = "Shampoo_307.png", SellerId = 2 }
 			};
 			await context.Products.AddRangeAsync(products);
 			await context.SaveChangesAsync();

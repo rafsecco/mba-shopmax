@@ -15,31 +15,20 @@
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Description)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.CreatedAt)
-			</th>
+			<th>@Html.DisplayNameFor(model => model.Name)</th>
+			<th>@Html.DisplayNameFor(model => model.Description)</th>
+			<th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var item in Model)
+		@foreach (var (item, index) in Model.Select((value, i) => (value, i)))
 		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CreatedAt)
-				</td>
+			var rowClass = index % 2 == 0 ? "table-light" : "table-secondary";
+			<tr class="@rowClass">
+				<td>@Html.DisplayFor(modelItem => item.Name)</td>
+				<td>@Html.DisplayFor(model => item.Description)</td>
+				<td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
 				<td class="text-right">
 					<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
 					<a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>

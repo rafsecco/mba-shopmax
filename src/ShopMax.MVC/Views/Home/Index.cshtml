@@ -1,8 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@model List<ProductViewModel>
+
+@{
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+	<h1 class="display-4">Welcome</h1>
+	<p>See all our products!</p>
 </div>
+
+<div class="row">
+	@foreach (var product in Model)
+	{
+		<div class="col-md-4 mb-4">
+			<div class="card">
+				<img src="~/uploads/images/@Url.Content(product.Image)" class="card-img-top" alt="@product.Name" width="307px">
+				<div class="card-body">
+					<h5 class="card-title">@product.Name</h5>
+					@* <p class="card-text"> @product.Description?.Length > 10 ?? @product.Description?.Substring(0, 10) + "..."</p> *@
+					<p class="card-text"> @product.Description</p>
+					<p class="card-text"><b>Category:</b> @product.Category.Name</p>
+					<h6 class="text-primary">$@product.Price.ToString("F2")</h6>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+

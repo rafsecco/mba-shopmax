@@ -51,21 +51,6 @@ namespace ShopMax.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sellers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    IdentityId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sellers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tb_Categories",
                 columns: table => new
                 {
@@ -78,6 +63,21 @@ namespace ShopMax.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tb_Sellers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ApplicationUserId = table.Column<string>(type: "TEXT", maxLength: 36, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_Sellers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,14 +206,14 @@ namespace ShopMax.Data.Migrations
                 {
                     table.PrimaryKey("PK_tb_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tb_Products_Sellers_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Sellers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_tb_Products_tb_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "tb_Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_tb_Products_tb_Sellers_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "tb_Sellers",
                         principalColumn: "Id");
                 });
 
@@ -293,10 +293,10 @@ namespace ShopMax.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Sellers");
+                name: "tb_Categories");
 
             migrationBuilder.DropTable(
-                name: "tb_Categories");
+                name: "tb_Sellers");
         }
     }
 }

@@ -12,76 +12,41 @@
 	<a class="btn btn-info" asp-action="Create">New Product</a>
 </p>
 
-<table class="table table-hover">
-	<thead class="thead-dark">
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Description)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Price)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.QuantityStock)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Active)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Image)
-			</th>
-			@* <th>
-				@Html.DisplayNameFor(model => model.Category)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Seller)
-			</th> *@
-			<th>
-				@Html.DisplayNameFor(model => model.CreatedAt)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
+@if (!Model.Any()) {
+	<h3>You have not registered any products yet</h3>
+} else {
+	<table class="table table-hover">
+		<thead class="thead-dark">
 			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Price)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.QuantityStock)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Active)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Image)
-				</td>
-				@* <td>
-					@html.displayfor(modelitem => item.Category)
-				</td>
-				<td>
-					@html.displayfor(modelitem => item.Seller)
-				</td> *@
-				<td>
-					@Html.DisplayFor(modelItem => item.CreatedAt)
-				</td>
-				<td class="text-right">
-					<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
-					<a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
-					<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
-				</td>
+				<th>@Html.DisplayNameFor(model => model.Name)</th>
+				<th>@Html.DisplayNameFor(model => model.Description)</th>
+				<th>@Html.DisplayNameFor(model => model.Price)</th>
+				<th>@Html.DisplayNameFor(model => model.QuantityStock)</th>
+				<th>@Html.DisplayNameFor(model => model.Active)</th>
+				@* <th>@Html.DisplayNameFor(model => model.Category)</th> *@
+				<th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+				<th></th>
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			@foreach (var (item, index) in Model.Select((value, i) => (value, i)))
+			{
+				var rowClass = index % 2 == 0 ? "table-light" : "table-secondary";
+				<tr class="@rowClass">
+					<td>@Html.DisplayFor(modelItem => item.Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Description)</td>
+					<td>@Html.DisplayFor(modelItem => item.Price)</td>
+					<td>@Html.DisplayFor(modelItem => item.QuantityStock)</td>
+					<td>@Html.DisplayFor(modelItem => item.Active)</td>
+					@* <td>@html.displayfor(modelitem => item.Category)</td> *@
+					<td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+					<td class="text-right">
+						<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+						<a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+						<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

@@ -1,32 +1,34 @@
 using System.Diagnostics;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ShopMax.Business.Interfaces;
 using ShopMax.MVC.Models;
 
-namespace ShopMax.MVC.Controllers
+namespace ShopMax.MVC.Controllers;
+
+public class HomeController(
+	ILogger<HomeController> logger,
+	IMapper mapper,
+	IProductService productService
+	) : Controller
 {
-	public class HomeController : Controller
+	private readonly ILogger<HomeController> _logger = logger;
+	private readonly IMapper _mapper = mapper;
+	private readonly IProductService _productService = productService;
+
+	public async Task<IActionResult> IndexAsync()
 	{
-		private readonly ILogger<HomeController> _logger;
+		return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productService.GetAllWithCategory()));
+	}
 
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
+	public IActionResult Privacy()
+	{
+		return View();
+	}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
+	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+	public IActionResult Error()
+	{
+		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
 }

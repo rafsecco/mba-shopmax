@@ -7,7 +7,7 @@ using ShopMax.MVC.Models;
 
 namespace ShopMax.MVC.Controllers;
 
-//[Authorize]
+[Authorize]
 [Route("category")]
 public class CategoriesController : BaseController
 {
@@ -23,7 +23,6 @@ public class CategoriesController : BaseController
 		_mapper = mapper;
 	}
 
-	[AllowAnonymous]
 	[Route("list")]
 	public async Task<IActionResult> Index()
 	{
