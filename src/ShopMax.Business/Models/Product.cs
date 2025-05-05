@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ShopMax.Business.Models;
 
 public class Product : Entity
@@ -10,7 +12,9 @@ public class Product : Entity
 
 	// EF Relation
 	public int CategoryId { get; set; }
+	[JsonIgnore]
 	public Category? Category { get; set; }
 	public int SellerId { get; set; }
+	[JsonIgnore]
 	public Seller Seller { get; set; } = null!;
 }

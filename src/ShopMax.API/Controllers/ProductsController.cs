@@ -3,19 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using ShopMax.Business.Models;
 using ShopMax.Data;
 using Microsoft.AspNetCore.Authorization;
+using ShopMax.Business.Interfaces;
 
 namespace ShopMax.API.Controllers
 {
 	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ProductsController : ControllerBase
+	public class ProductsController : BaseController
 	{
 		private readonly ShopMaxDbContext _context;
+		private readonly IProductService _productService;
+		private readonly ICategoryService _categoryService;
 
-		public ProductsController(ShopMaxDbContext context)
+		public ProductsController(
+			ShopMaxDbContext context,
+			IProductService productService,
+			ICategoryService categoryService,
+			INotificator notificator) : base(notificator)
 		{
 			_context = context;
+			_productService = productService;
+			_categoryService = categoryService;
 		}
 
 		[AllowAnonymous]
@@ -38,11 +47,11 @@ namespace ShopMax.API.Controllers
 				return NotFound();
 			}
 
-			return produto;
+			return Ok(produto);
 		}
 
 		[HttpPut("edit/{id:int}")]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
@@ -71,7 +80,7 @@ namespace ShopMax.API.Controllers
 				}
 			}
 
-			return NoContent();
+			return Ok();
 		}
 
 		[HttpPost("create")]
@@ -86,7 +95,7 @@ namespace ShopMax.API.Controllers
 		}
 
 		[HttpDelete("delete/{id:int}")]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
 		public async Task<IActionResult> DeleteProduct(int id)
@@ -100,7 +109,24 @@ namespace ShopMax.API.Controllers
 			_context.Products.Remove(product);
 			await _context.SaveChangesAsync();
 
-			return NoContent();
+			return Ok();
+		}
+
+		[HttpGet("products-from-category/{id:int}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<ActionResult<IEnumerable<Product>>> GetProductsFromCategory(int id)
+		{
+			var products = await _productService.GetProductsFromCategory(id);
+
+			if (products == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(products);
 		}
 
 		private bool ProductExists(int id)

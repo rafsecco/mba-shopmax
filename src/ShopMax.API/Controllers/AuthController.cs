@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ShopMax.API.Models;
 using ShopMax.Business.Models;
+using ShopMax.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -15,15 +16,18 @@ public class AuthController : ControllerBase
 {
 	private readonly SignInManager<ApplicationUser> _signInManager;
 	private readonly UserManager<ApplicationUser> _userManager;
+	private readonly ShopMaxDbContext _context;
 	private readonly JwtSettings _jwtSettings;
 
 	public AuthController(
 		SignInManager<ApplicationUser> signInManager,
 		UserManager<ApplicationUser> userManager,
+		ShopMaxDbContext context,
 		IOptions<JwtSettings> jwtSettings)
 	{
 		_signInManager = signInManager;
 		_userManager = userManager;
+		_context = context;
 		_jwtSettings = jwtSettings.Value;
 
 		if (_jwtSettings == null)
@@ -48,6 +52,16 @@ public class AuthController : ControllerBase
 		};
 
 		var result = await _userManager.CreateAsync(user, registerUser.Password);
+
+		#region Create Seller
+		var seller = new Seller
+		{
+			Name = user.UserName,
+			ApplicationUserId = user.Id
+		};
+		_context.Sellers.Add(seller);
+		await _context.SaveChangesAsync();
+		#endregion
 
 		if (result.Succeeded)
 		{
