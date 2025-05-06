@@ -25,6 +25,7 @@ namespace ShopMax.API.Controllers
 			return await _context.Categories.ToListAsync();
 		}
 
+		[AllowAnonymous]
 		[HttpGet("details/{id:int}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

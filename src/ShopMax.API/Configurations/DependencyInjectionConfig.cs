@@ -1,10 +1,10 @@
 using ShopMax.Business.Interfaces;
 using ShopMax.Business.Notifications;
 using ShopMax.Business.Services;
-using ShopMax.Data;
 using ShopMax.Data.Repository;
+using ShopMax.Data;
 
-namespace ShopMax.MVC.Configurations;
+namespace ShopMax.API.Configurations;
 
 public static class DependencyInjectionConfig
 {

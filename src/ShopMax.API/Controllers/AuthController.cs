@@ -6,6 +6,7 @@ using ShopMax.API.Models;
 using ShopMax.Business.Models;
 using ShopMax.Data;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace ShopMax.API.Controllers;
@@ -81,20 +82,29 @@ public class AuthController : ControllerBase
 
 		if (result.Succeeded)
 		{
-			return Ok(GenerateJwt());
+			var appUser = await _signInManager.UserManager.FindByEmailAsync(loginUser.Email);
+			var seller = _context.Sellers.FirstOrDefault(x => x.ApplicationUserId == appUser.Id);
+			return Ok(GenerateJwt(seller));
 		}
 
 		return Problem("Incorrect username or password.");
 	}
 
-	private string GenerateJwt()
+	private string GenerateJwt(Seller seller = null)
 	{
+
+		var claims = new[]
+		{
+			new Claim("UserId", seller.Id.ToString())
+		};
+
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
 
 		var token = tokenHandler.CreateToken(new SecurityTokenDescriptor {
 			Issuer = _jwtSettings.Issuer,
 			Audience = _jwtSettings.Audience,
+			Subject = new ClaimsIdentity(claims),
 			Expires = DateTime.UtcNow.AddHours(_jwtSettings.Expires),
 			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		});

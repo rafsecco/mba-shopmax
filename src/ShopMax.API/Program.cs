@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ShopMax.API.Configurations;
 using ShopMax.API.Models;
-using ShopMax.Business.Interfaces;
 using ShopMax.Business.Models;
-using ShopMax.Business.Notifications;
-using ShopMax.Business.Services;
 using ShopMax.Data;
-using ShopMax.Data.Repository;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -65,19 +60,7 @@ builder.Services
 	.AddEntityFrameworkStores<ShopMaxDbContext>()
 	.AddDefaultTokenProviders();
 
-//builder.Services.AddIdentity<Seller, IdentityRole>()
-//	.AddRoles<IdentityRole>()
-//	.AddEntityFrameworkStores<ShopMaxDbContext>();
-
-// Data
-//builder.Services.AddScoped<ShopMaxDbContext>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-// Business
-builder.Services.AddScoped<INotificator, Notificator>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddDependencyInjectionConfig();
 
 #region Pegando o Token e gerando a chave encoded
 var JwtSettingsSection = builder.Configuration.GetSection("JwtSettings");

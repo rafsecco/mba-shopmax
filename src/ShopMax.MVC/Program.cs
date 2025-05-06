@@ -26,7 +26,7 @@ builder.Services
 
 builder.Services
 	.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
-	.AddService();
+	.AddDependencyInjectionConfig();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
