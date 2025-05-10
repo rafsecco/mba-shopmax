@@ -27,9 +27,10 @@ public static class DbMigrationHelpers
 
 		var context = scope.ServiceProvider.GetRequiredService<ShopMaxDbContext>();
 
+		await context.Database.EnsureCreatedAsync();
+
 		if (env.IsDevelopment() || env.IsEnvironment("Docker"))
 		{
-			await context.Database.EnsureCreatedAsync();
 			await EnsureSeedTables(context, serviceProvider);
 		}
 	}

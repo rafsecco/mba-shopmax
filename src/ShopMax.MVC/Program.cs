@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
+	app.UseDbMigrationHelper();
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 }
