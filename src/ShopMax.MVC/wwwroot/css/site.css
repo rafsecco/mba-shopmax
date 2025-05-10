@@ -19,6 +19,7 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: #CFCFCF;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -44,3 +45,44 @@ body {
   background-color: #dde0e3;
   cursor: pointer;
 }
+
+.header {
+  background-color: #0A1425 !important;
+  color: white !important;
+}
+  .header a {
+    color: #728AA6 !important;
+  }
+  .header a:hover {
+    color: yellow !important;
+    text-decoration: underline;
+  }
+  .header button.text-dark {
+    color: #728AA6 !important;
+  }
+    .header button.text-dark:hover {
+      color: yellow !important;
+      text-decoration: underline;
+    }
+
+
+.footer {
+  background-color: #0A1425 !important;
+  color: white !important;
+}
+  .footer a {
+    color: #728AA6 !important;
+  }
+  .footer a:hover {
+    color: yellow !important;
+    text-decoration: underline;
+  }
+
+.card {
+  border: 2px solid black;
+}
+
+.card-body h5 {
+  text-decoration: underline;
+}
+

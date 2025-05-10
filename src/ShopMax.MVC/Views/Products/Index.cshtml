@@ -9,7 +9,7 @@
 <vc:Summary></vc:Summary>
 
 <p>
-	<a class="btn btn-info" asp-action="Create">New Product</a>
+	<a class="btn btn-info" asp-action="Create">Create Product</a>
 </p>
 
 @if (!Model.Any()) {
@@ -23,7 +23,6 @@
 				<th>@Html.DisplayNameFor(model => model.Price)</th>
 				<th>@Html.DisplayNameFor(model => model.QuantityStock)</th>
 				<th>@Html.DisplayNameFor(model => model.Active)</th>
-				@* <th>@Html.DisplayNameFor(model => model.Category)</th> *@
 				<th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
 				<th></th>
 			</tr>
@@ -38,7 +37,6 @@
 					<td>@Html.DisplayFor(modelItem => item.Price)</td>
 					<td>@Html.DisplayFor(modelItem => item.QuantityStock)</td>
 					<td>@Html.DisplayFor(modelItem => item.Active)</td>
-					@* <td>@html.displayfor(modelitem => item.Category)</td> *@
 					<td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
 					<td class="text-right">
 						<a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>

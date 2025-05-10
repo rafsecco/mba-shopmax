@@ -34,14 +34,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+app.UseDbMigrationHelper();
+
 if (app.Environment.IsDevelopment())
 {
 	app.UseMigrationsEndPoint();
-	app.UseDbMigrationHelper();
 }
 else
 {
-	app.UseDbMigrationHelper();
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 }
