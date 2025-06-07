@@ -1,67 +1,87 @@
 # Feedback - Avaliação Geral
 
 ## Front End
+
 ### Navegação
   * Pontos positivos:
-    - Possui views e rotas definidas no projeto ShopMax.MVC
+    - Projeto MVC implementado com rotas funcionais para login e navegação de produtos.
+    - Estrutura de views organizada.
 
 ### Design
-    - Será avaliado na entrega final
+  - Interface básica e funcional, atende ao mínimo necessário para uma interface administrativa.
 
 ### Funcionalidade
   * Pontos positivos:
-    - Interface web com HTML/CSS
-    - Implementação com Razor Pages/Views
-
-## Back End
-### Arquitetura
-  * Pontos positivos:
-    - Estrutura em camadas na pasta src:
-      * ShopMax.API
-      * ShopMax.Business
-      * ShopMax.Data
-      * ShopMax.MVC
+    - CRUD funcional implementado na API.
+    - Identity implementado corretamente nas duas camadas (API com JWT, MVC com cookies).
+    - Uso de SQLite com migrations automáticas implementadas.
+    - Modelagem das entidades e estrutura geral do domínio estão adequadas.
 
   * Pontos negativos:
-    - Arquitetura mais complexa que o necessário com 4 camadas
-    - Separação desnecessária entre Business e Data (nesse caso uma única camada "Core" atende), mas tudo bem não está demasiadamente complexo.
+    - A criação do vendedor só ocorre na API, não no MVC, contrariando o escopo que exige associação imediata do usuário registrado.
+    - Ao criar um produto, o ID do vendedor não é recuperado do usuário logado. Isso compromete a segurança e abre brecha para inconsistências.
+    - Um vendedor pode modificar produtos de outro, sem validação de domínio.
+    - Seed de dados está presente apenas na camada MVC; a API não inicializa dados.
+    - Camadas `Business` e `Data` adicionam complexidade desnecessária para um projeto deste porte — poderiam estar unificadas em uma única camada `Core`.
+
+## Back End
+
+### Arquitetura
+  * Pontos positivos:
+    - Separação entre camadas implementada com clareza.
+    - Uso de DI e configuração modular está bem estruturado.
+
+  * Pontos negativos:
+    - Camadas `Business` e `Data` poderiam ser unificadas.
+    - Implementação em inglês desconsidera a diretriz do projeto de usar nomes em português para as entidades e modelos.
 
 ### Funcionalidade
   * Pontos positivos:
-    - Suporte a múltiplos bancos de dados (SQL Server e SQLite)
-    - Implementação do ASP.NET Identity
-    - Configuração de Seed de dados mencionada
+    - Funcionalidades básicas operam na API conforme o esperado.
 
- * Pontos negativos:
-    - MVC não implementa as mesmas funcionalidades da API no registro do usuário.
+  * Pontos negativos:
+    - Segurança na manipulação dos dados por vendedor está ausente.
+    - Falta de verificação do usuário logado nas operações de domínio sensíveis.
 
 ### Modelagem
   * Pontos positivos:
-    - Modelagem simples e funcional
-
-  * Pontos negativos:
-    - Nomenclatura em ingles e implementação em portugues é um grande erro e causa muita confusão.
+    - Estrutura das entidades bem definida.
+    - Modelos e ViewModels organizados e aplicáveis ao domínio.
 
 ## Projeto
+
 ### Organização
   * Pontos positivos:
-    - Estrutura organizada com pasta src na raiz
-    - Arquivo solution (ShopMax.sln) na raiz
-    - .gitignore adequado
-    - Separação clara dos projetos
+    - Projeto organizado com uso da pasta `src`, solution `.sln` na raiz.
+    - Documentação presente e Swagger configurado na API.
+
+  * Pontos negativos:
+    - Nenhum.
 
 ### Documentação
   * Pontos positivos:
-    - README.md presente com:
-      * Estrutura do projeto bem detalhada
-      * Tecnologias utilizadas
-      * Instruções de execução
-    - Arquivo FEEDBACK.md presente
-    - Documentação da API via Swagger
+    - `README.md` e `FEEDBACK.md` estão presentes.
+    - Swagger ativo na API.
 
 ### Instalação
   * Pontos positivos:
-    - Suporte a múltiplos bancos (SQL Server e SQLite)
-    - Configuração de Seed de dados mencionada
-    - Instruções detalhadas de instalação
-    - URLs específicas para acesso local
+    - SQLite configurado corretamente.
+
+  * Pontos negativos:
+    - Seed de dados não está implementado na API.
+
+---
+
+# 📊 Matriz de Avaliação de Projetos
+
+| **Critério**                   | **Peso** | **Nota** | **Resultado Ponderado**                  |
+|-------------------------------|----------|----------|------------------------------------------|
+| **Funcionalidade**            | 30%      | 7        | 2,1                                      |
+| **Qualidade do Código**       | 20%      | 7        | 1,4                                      |
+| **Eficiência e Desempenho**   | 20%      | 7        | 1,4                                      |
+| **Inovação e Diferenciais**   | 10%      | 8        | 0,8                                      |
+| **Documentação e Organização**| 10%      | 8        | 0,8                                      |
+| **Resolução de Feedbacks**    | 10%      | 5        | 0,5                                      |
+| **Total**                     | 100%     | -        | **7,0**                                  |
+
+## 🎯 **Nota Final: 7 / 10**
